@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "chokidar": "^3.5.3",
     "ethers": "^5.7.0",
     "moralis": "^2.1.0",
     "next": "12.2.5",
