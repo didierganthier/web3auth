@@ -1,15 +1,30 @@
 import { InjectedConnector } from "@wagmi/core";
-import { useConnect } from "wagmi";
+import axios from "axios";
+import { useAccount, useConnect, useDisconnect, useSignMessage } from "wagmi";
 
 function SignIn() {
     const { connectAsync } = useConnect();
+    const { disconnectAsync } = useDisconnect();
+    const { isConnected } = useAccount();
+    const { signMessageAsync } = useSignMessage();
 
     const handleAuth = async () => {
+        if (isConnected) {
+            await disconnectAsync();
+        }
+
         const { account, chain } = await connectAsync({ connector: new InjectedConnector() });
 
         const userData = { address: account, chain: chain.id, network: 'evm' };
 
-        console.log(userData);
+        const { data } = await axios.post("/api/auth/request-message", userData, {
+            headers: {
+                "content-type": "application/json",
+            },
+        });
+
+        const message = data.message;
+        const signature = await signMessageAsync(message);
     }
 
     return (

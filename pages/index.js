@@ -5,6 +5,12 @@ import SignIn from './signin'
 
 export default function Home() {
   return (
-    <SignIn />
+    <div>
+      <Head>
+        <title>Metamask Authentification</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <SignIn />
+    </div>
   )
 }
